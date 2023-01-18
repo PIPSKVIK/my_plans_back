@@ -97,7 +97,7 @@ class AuthService:
         self,
         user_id: int
     ) -> tables.User:
-        user =
+        user = (
             self.session
             .query(tables.User)
             .filter_by(id=user_id)

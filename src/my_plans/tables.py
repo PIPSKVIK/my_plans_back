@@ -33,3 +33,5 @@ class Post(Base):
     date = sa.Column(sa.Date)
 
 
+class BaseUser:
+    pass

@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from .. import tables
 from ..database import get_session
 
-from ..models.auth import Token, UserCreate
+from ..models.auth import Token, UserCreate, BaseUser
 from ..models.auth import User
 from ..settings import settings
 
@@ -93,10 +93,7 @@ class AuthService:
         )
         return request_options
 
-    def get_user_by_id(
-        self,
-        user_id: int
-    ) -> tables.User:
+    def get_user_by_id(self, user_id: int) -> tables.User:
         user = (
             self.session
             .query(tables.User)
@@ -104,6 +101,28 @@ class AuthService:
             .first()
         )
         return user
+
+    def update_user(self, user_id: int, request_user_data: BaseUser) -> tables.User:
+        user_options = (
+            self.session
+            .query(tables.User)
+            .filter_by(id=user_id)
+            .first()
+        )
+        for field, value in request_user_data:
+            setattr(user_options, field, value)
+        self.session.commit()
+        return user_options
+
+    def delete_user(self, user_id: int):
+        request_user = (
+            self.session
+            .query(tables.User)
+            .filter_by(id=user_id)
+            .first()
+        )
+        self.session.delete(request_user)
+        self.session.commit()
 
     # При регистрации пользователя, автоматически происходит авторизация по этому Токен можем сразу вернуть
     def register_new_user(self, user_data: UserCreate) -> Token:

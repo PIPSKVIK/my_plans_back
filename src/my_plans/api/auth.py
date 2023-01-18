@@ -2,6 +2,8 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import Response
+from fastapi import status
 
 from ..models.auth import (
     User,
@@ -59,16 +61,26 @@ def get_user_by_id(
 ):
     return service.get_user_by_id(user_id)
 
-# @router.get(
-#     '/{operation_id}',
-#     response_model=models.Operation,
-# )
-# def get_operation(
-#     operation_id: int,
-#     user: models.User = Depends(get_current_user),
-#     operations_service: OperationsService = Depends(),
-# ):
-#     return operations_service.get(
-#         user.id,
-#         operation_id,
-#     )
+
+@router.put('/user/{user_id}', response_model=User, tags=["users_api"])
+def update_user(
+    user_id: int,
+    request_user_data: BaseUser,
+    user: User = Depends(get_current_user),
+    service: AuthService = Depends()
+):
+    return service.update_user(
+        user_id=user_id,
+        request_user_data=request_user_data
+    )
+
+
+@router.delete('/user/{user_id}', tags=["users_api"])
+def delete_user(
+    user_id: int,
+    user: User = Depends(get_current_user),
+    service: AuthService = Depends()
+):
+    service.delete_user(user_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+

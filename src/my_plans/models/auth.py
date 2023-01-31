@@ -5,6 +5,11 @@ from typing import Optional
 class BaseUser(BaseModel):
     email: str
     username: str
+    address: Optional[str]
+    phone: Optional[str]
+    status: Optional[str]
+    nickname: Optional[str]
+    bio: Optional[str]
     is_active: Optional[bool] = False
     is_admin: Optional[bool] = False
 

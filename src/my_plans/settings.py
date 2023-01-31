@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     jwt_secret: str = 'mAhrYw_9DiNE9cgu9JkRhfKJ_CCbd9Q4al0GowIBdk4'  # Секретный ключ / Лучше конечно вынести в .env
     jwt_algorithm: str = 'HS256'  # Алгоритм шифрования
-    jwt_expiration: int = 3600  # Время жизни токена
+    jwt_expiration: int = 60000  # Время жизни токена
 
 
 settings = Settings(

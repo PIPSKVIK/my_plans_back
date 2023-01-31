@@ -141,9 +141,7 @@ class AuthService:
         exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Incorrect username or password',
-            headers={
-                'WWW-Authenticate': 'Bearer '
-            }
+            headers={'WWW-Authenticate': 'Bearer'},
         )
         user = (
             self.session
@@ -156,3 +154,4 @@ class AuthService:
         if not self.verify_password(password, user.password_hash):
             raise exception
         return self.create_token(user)
+

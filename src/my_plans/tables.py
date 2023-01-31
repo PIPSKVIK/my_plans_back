@@ -12,6 +12,11 @@ class User(Base):
     username = sa.Column(sa.Text, unique=True)
     is_active = sa.Column(sa.Boolean)
     is_admin = sa.Column(sa.Boolean)
+    address = sa.Column(sa.Text)
+    phone = sa.Column(sa.Text)
+    status = sa.Column(sa.Text)
+    nickname = sa.Column(sa.Text)
+    bio = sa.Column(sa.Text)
     password_hash = sa.Column(sa.Text)
 
 

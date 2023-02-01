@@ -129,6 +129,11 @@ class AuthService:
         user = tables.User(
             email=user_data.email,
             username=user_data.username,
+            address=user_data.address,
+            phone=user_data.phone,
+            status=user_data.status,
+            nickname=user_data.nickname,
+            bio=user_data.bio,
             password_hash=self.hash_password(user_data.password),
             is_active=user_data.is_active,
             is_admin=user_data.is_admin

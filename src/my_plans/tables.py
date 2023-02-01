@@ -1,3 +1,5 @@
+from enum import unique
+
 import sqlalchemy as sa
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -20,6 +22,25 @@ class User(Base):
     password_hash = sa.Column(sa.Text)
 
 
+# is_anomaly_time: Optional[bool]
+# location: str
+# isEnded: Optional[bool]
+# status: StatusShifts
+class Shifts(Base):
+    __tablename__ = 'shifts'
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    name = sa.Column(sa.String, unique=True)
+    start_at = sa.Column(sa.Date)
+    end_at = sa.Column(sa.Date)
+    comment = sa.Column(sa.String)
+    type = sa.Column(sa.String)
+    is_anomaly_time = sa.Column(sa.Boolean)
+    location = sa.Column(sa.String)
+    isEnded = sa.Column(sa.Boolean)
+    status = sa.Column(sa.Boolean)
+
+
 class RequestOptions(Base):
     __tablename__ = 'request_options'
 
@@ -40,3 +61,4 @@ class Post(Base):
 
 class BaseUser:
     pass
+

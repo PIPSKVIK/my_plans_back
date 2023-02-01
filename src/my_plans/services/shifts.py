@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import (
     Depends,
     HTTPException,
@@ -19,3 +20,10 @@ class ShiftsService:
         self.session.commit()
         return shifts_options
 
+    def get_all_shifts(self) -> List[tables.Shifts]:
+        shifts_options = (
+            self.session
+            .query(tables.Shifts)
+            .all()
+        )
+        return shifts_options

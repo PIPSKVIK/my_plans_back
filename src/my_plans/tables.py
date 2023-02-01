@@ -22,10 +22,6 @@ class User(Base):
     password_hash = sa.Column(sa.Text)
 
 
-# is_anomaly_time: Optional[bool]
-# location: str
-# isEnded: Optional[bool]
-# status: StatusShifts
 class Shifts(Base):
     __tablename__ = 'shifts'
 
@@ -38,7 +34,8 @@ class Shifts(Base):
     is_anomaly_time = sa.Column(sa.Boolean)
     location = sa.Column(sa.String)
     isEnded = sa.Column(sa.Boolean)
-    status = sa.Column(sa.Boolean)
+    status = sa.Column(sa.String)
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('users.id'))
 
 
 class RequestOptions(Base):

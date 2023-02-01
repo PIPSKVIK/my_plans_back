@@ -1,5 +1,3 @@
-# shift_id: 12312312
-
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
@@ -7,7 +5,7 @@ from enum import Enum
 
 
 class TypeShifts(str, Enum):
-    JOB = 'Lob'
+    JOB = 'job'
     FAMILY = 'family'
     PERSONAL_TIME = 'personal time'
     ENTERTAINMENT = 'entertainment'
@@ -28,9 +26,9 @@ class BaseShifts(BaseModel):
     end_at: date
     comment: Optional[str]
     type: TypeShifts
-    is_anomaly_time: Optional[bool]
+    is_anomaly_time: Optional[bool] = False
     location: str
-    isEnded: Optional[bool]
+    isEnded: Optional[bool] = False
     status: StatusShifts
 
 
@@ -39,3 +37,7 @@ class Shifts(BaseShifts):
 
     class Config:
         orm_mode = True
+
+
+class CreateShifts(BaseShifts):
+    pass

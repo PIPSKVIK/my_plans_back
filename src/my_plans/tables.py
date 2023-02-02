@@ -36,6 +36,7 @@ class Shifts(Base):
     isEnded = sa.Column(sa.Boolean)
     status = sa.Column(sa.String)
     user_id = sa.Column(sa.Integer, sa.ForeignKey('users.id'))
+    month = sa.Column(sa.Integer)
 
 
 class RequestOptions(Base):

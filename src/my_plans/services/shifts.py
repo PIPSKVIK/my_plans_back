@@ -6,8 +6,12 @@ from fastapi import (
 )
 from ..database import get_session
 from sqlalchemy.orm import Session
+from sqlalchemy import extract
 from ..models.shifts import CreateShifts
 from .. import tables
+
+from datetime import date
+from datetime import datetime
 
 
 class ShiftsService:

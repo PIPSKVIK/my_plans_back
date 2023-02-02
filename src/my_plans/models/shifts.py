@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
+from datetime import datetime
 from enum import Enum
 
 
@@ -30,6 +31,14 @@ class BaseShifts(BaseModel):
     location: str
     isEnded: Optional[bool] = False
     status: StatusShifts
+    month: Optional[int]
+
+    def set_month(self) -> None:
+        self.month = self.start_at.month
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.set_month()
 
 
 class Shifts(BaseShifts):

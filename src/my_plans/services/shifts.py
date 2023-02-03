@@ -7,7 +7,7 @@ from fastapi import (
 from ..database import get_session
 from sqlalchemy.orm import Session
 from sqlalchemy import extract
-from ..models.shifts import CreateShifts
+from ..models.shifts import CreateShifts, BaseShifts
 from .. import tables
 
 from datetime import date
@@ -40,3 +40,15 @@ class ShiftsService:
             .all()
         )
         return shifts
+
+    def update_shifts(self, shift_id: int, request_shift_data: BaseShifts) -> tables.Shifts:
+        shift_options = (
+            self.session
+            .query(tables.Shifts)
+            .filter_by(id=shift_id)
+            .first()
+        )
+        for field, value in request_shift_data:
+            setattr(shift_options, field, value)
+        self.session.commit()
+        return shift_options

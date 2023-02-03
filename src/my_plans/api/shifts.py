@@ -37,3 +37,17 @@ def get_shifts_by_month(
         service: ShiftsService = Depends()
 ):
     return service.get_shifts_by_month(month=month)
+
+
+@router.put('/{shift_id}', response_model=Shifts, tags=["shifts_api"])
+def update_shifts(
+    shift_id: int,
+    request_shift_data: BaseShifts,
+    user: User = Depends(get_current_user),
+    service: ShiftsService = Depends()
+):
+    return service.update_shifts(
+        shift_id=shift_id,
+        request_shift_data=request_shift_data
+    )
+

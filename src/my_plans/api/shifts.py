@@ -2,6 +2,9 @@ from typing import List
 
 from fastapi import APIRouter
 from fastapi import Depends
+from fastapi import Response
+from fastapi import status
+
 from ..models.shifts import (Shifts, CreateShifts, BaseShifts)
 from ..services.auth import get_current_user
 
@@ -50,4 +53,13 @@ def update_shifts(
         shift_id=shift_id,
         request_shift_data=request_shift_data
     )
+
+@router.delete('/{shift_id}', tags=["shifts_api"])
+def delete_shift(
+    shift_id: int,
+    user: User = Depends(get_current_user),
+    service: ShiftsService = Depends()
+):
+    service.delete_shift(shift_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 

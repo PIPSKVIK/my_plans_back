@@ -52,3 +52,13 @@ class ShiftsService:
             setattr(shift_options, field, value)
         self.session.commit()
         return shift_options
+
+    def delete_shift(self, shift_id: int):
+        request_shift = (
+            self.session
+            .query(tables.Shifts)
+            .filter_by(id=shift_id)
+            .first()
+        )
+        self.session.delete(request_shift)
+        self.session.commit()

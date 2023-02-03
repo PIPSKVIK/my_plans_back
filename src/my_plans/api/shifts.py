@@ -28,3 +28,12 @@ def get_all_shifts(
     service: ShiftsService = Depends()
 ):
     return service.get_all_shifts()
+
+
+@router.get('/shifts-by-month{month}', response_model=List[Shifts], tags=["shifts_api"])
+def get_shifts_by_month(
+        month: int,
+        user: User = Depends(get_current_user),
+        service: ShiftsService = Depends()
+):
+    return service.get_shifts_by_month(month=month)

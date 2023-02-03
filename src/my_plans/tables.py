@@ -26,7 +26,7 @@ class Shifts(Base):
     __tablename__ = 'shifts'
 
     id = sa.Column(sa.Integer, primary_key=True)
-    name = sa.Column(sa.String, unique=True)
+    name = sa.Column(sa.String)
     start_at = sa.Column(sa.Date)
     end_at = sa.Column(sa.Date)
     comment = sa.Column(sa.String)

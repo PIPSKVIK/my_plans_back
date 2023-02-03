@@ -31,3 +31,12 @@ class ShiftsService:
             .all()
         )
         return shifts_options
+
+    def get_shifts_by_month(self, month: int) -> List[tables.Shifts]:
+        shifts = (
+            self.session
+            .query(tables.Shifts)
+            .filter_by(month=month)
+            .all()
+        )
+        return shifts

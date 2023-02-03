@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import Optional
 from datetime import date
 from datetime import datetime
@@ -31,14 +31,11 @@ class BaseShifts(BaseModel):
     location: str
     isEnded: Optional[bool] = False
     status: StatusShifts
-    month: Optional[int]
+    month: Optional[int] = None
 
-    def set_month(self) -> None:
-        self.month = self.start_at.month
-
-    def __init__(self, **data):
-        super().__init__(**data)
-        self.set_month()
+    @validator('month', always=True)
+    def validate_month(cls, _, values):
+        return values.get('start_at').month
 
 
 class Shifts(BaseShifts):
@@ -50,3 +47,4 @@ class Shifts(BaseShifts):
 
 class CreateShifts(BaseShifts):
     pass
+

@@ -29,6 +29,8 @@ class Shifts(Base):
     name = sa.Column(sa.String)
     start_at = sa.Column(sa.Date)
     end_at = sa.Column(sa.Date)
+    start_time = sa.Column(sa.String)
+    end_time = sa.Column(sa.String)
     comment = sa.Column(sa.String)
     type = sa.Column(sa.String)
     is_anomaly_time = sa.Column(sa.Boolean)
@@ -37,6 +39,7 @@ class Shifts(Base):
     status = sa.Column(sa.String)
     user_id = sa.Column(sa.Integer, sa.ForeignKey('users.id'))
     month = sa.Column(sa.Integer)
+    shift_user_id = sa.Column(sa.Integer)
 
 
 class RequestOptions(Base):

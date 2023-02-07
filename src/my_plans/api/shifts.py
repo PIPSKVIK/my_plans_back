@@ -5,7 +5,7 @@ from fastapi import Depends
 from fastapi import Response
 from fastapi import status
 
-from ..models.shifts import (Shifts, CreateShifts, BaseShifts)
+from ..models.shifts import (Shifts, CreateShifts, BaseShifts, TypeShifts)
 from ..services.auth import get_current_user
 
 from ..tables import User
@@ -33,7 +33,7 @@ def get_all_shifts(
     return service.get_all_shifts()
 
 
-@router.get('/shifts-by-month{month}', response_model=List[Shifts], tags=["shifts_api"])
+@router.get('/shifts-by-month/{month}', response_model=List[Shifts], tags=["shifts_api"])
 def get_shifts_by_month(
         month: int,
         user: User = Depends(get_current_user),
@@ -54,6 +54,7 @@ def update_shifts(
         request_shift_data=request_shift_data
     )
 
+
 @router.delete('/{shift_id}', tags=["shifts_api"])
 def delete_shift(
     shift_id: int,
@@ -62,4 +63,3 @@ def delete_shift(
 ):
     service.delete_shift(shift_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
-

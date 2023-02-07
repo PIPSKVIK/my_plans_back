@@ -1,7 +1,7 @@
 from pydantic import BaseModel, validator
 from typing import Optional
 from datetime import date
-from datetime import datetime
+from datetime import time
 from enum import Enum
 
 
@@ -24,7 +24,9 @@ class StatusShifts(str, Enum):
 class BaseShifts(BaseModel):
     name: str
     start_at: date
-    end_at: date
+    end_at: Optional[date]
+    start_time: str
+    end_time: str
     comment: Optional[str]
     type: TypeShifts
     is_anomaly_time: Optional[bool] = False
@@ -32,6 +34,7 @@ class BaseShifts(BaseModel):
     isEnded: Optional[bool] = False
     status: StatusShifts
     month: Optional[int] = None
+    shift_user_id: int
 
     @validator('month', always=True)
     def validate_month(cls, _, values):

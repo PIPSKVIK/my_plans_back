@@ -7,7 +7,7 @@ from fastapi import (
 from ..database import get_session
 from sqlalchemy.orm import Session
 from sqlalchemy import extract
-from ..models.shifts import CreateShifts, BaseShifts
+from ..models.shifts import CreateShifts, BaseShifts, TypeShifts
 from .. import tables
 
 from datetime import date
@@ -62,3 +62,12 @@ class ShiftsService:
         )
         self.session.delete(request_shift)
         self.session.commit()
+
+    def get_current_shift_by_id(self, shift_id: int) -> tables.Shifts:
+        shift = (
+            self.session
+            .query(tables.Shifts)
+            .filter_by(id=shift_id)
+            .first()
+        )
+        return shift

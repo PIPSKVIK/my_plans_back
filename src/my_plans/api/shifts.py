@@ -4,8 +4,9 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import Response
 from fastapi import status
+from fastapi import Query
 
-from ..models.shifts import (Shifts, CreateShifts, BaseShifts, TypeShifts)
+from ..models.shifts import (Shifts, CreateShifts, BaseShifts)
 from ..services.auth import get_current_user
 
 from ..tables import User
@@ -39,7 +40,7 @@ def get_shifts_by_month(
         user: User = Depends(get_current_user),
         service: ShiftsService = Depends()
 ):
-    return service.get_shifts_by_month(month=month)
+    return service.get_shifts_by_month(month)
 
 
 @router.put('/{shift_id}', response_model=Shifts, tags=["shifts_api"])
@@ -63,3 +64,30 @@ def delete_shift(
 ):
     service.delete_shift(shift_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get('/type-shift', tags=["shifts_api"])
+def get_type_shift():
+    return [
+        'job',
+        'family',
+        'personal time',
+        'entertainment',
+        'sport',
+        'larning',
+        'travel'
+    ]
+
+
+@router.get('/status-shift', tags=["shifts_api"])
+def get_status_shift():
+    return ['open', 'close', 'pause']
+
+
+@router.get('/shift', response_model=Shifts, tags=["shifts_api"])
+def get_current_shift_by_id(
+    shift_id: int = Query(None, id=1),
+    user: User = Depends(get_current_user),
+    service: ShiftsService = Depends()
+):
+    return service.get_current_shift_by_id(shift_id)
